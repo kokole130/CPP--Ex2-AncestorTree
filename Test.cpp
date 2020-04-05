@@ -69,3 +69,68 @@ TEST_CASE("Exception Case") {
     CHECK_THROWS(T.find("avichai"));
     CHECK_THROWS(T.find("avihai"));
 }
+
+TEST_CASE("remove function") {
+    Tree T = makeTree();
+    CHECK(T.find("father") == string("Yaakov"));
+    CHECK(T.find("mother") == string("Rachel"));
+    T.remove("Isaac");
+    CHECK_THROWS(T.find("Isaac")));
+    CHECK_THROWS(T.find("Avraham"));
+    CHECK_THROWS(T.find("Terah"));
+    CHECK(T.find("Rivka")==string("grandmother"));
+    T.addFather("Rachel","Roni");
+    T.addMother("Rachel","Mimi");
+    CHECK_THROWS(T.remove("mishu"));
+    CHECK_THROWS(T.remove("yeled"));
+    CHECK_THROWS(T.remove("tarah"));
+    T.remove("Rachel");
+    CHECK_THROWS(T.find("mother");
+    
+}
+
+TEST_CASE("relation function"){
+    Tree T = makeTree();
+    CHECK(T.relation("Rivka")==string("grandmother"));
+    CHECK(T.relation("mishu")==string("unrelated"));
+    CHECK(T.relation("yeled")==string("unrelated"));
+    CHECK(T.relation("gibor")==string("unrelated"));
+    CHECK(T.relation("mami")==string("unrelated"));
+    CHECK(T.relation("gidi")==string("unrelated"));
+    T.addFather("Rivka","Baroh");
+    T.addMother("Rivka","Zipi");
+    CHECK(T.relation("Baroh")==string("great-grandfather"));
+    CHECK(T.relation("Zipi")==string("great-grandmother"));
+    T.addFather("Terah","Yigal");
+    T.addMother("Terah","Miri");
+    CHECK(T.relation("Yigal")==string("great-great-grandfather"));
+    CHECK(T.relation("Miri")==string("great-great-grandmother"));
+    CHECK(T.relation("parent")==string("unrelated"));
+    CHECK(T.relation("Yiga")==string("unrelated"));
+
+
+}
+
+TEST_CASE("check the find function"){
+    Tree T = makeTree();
+    T.addFather("Terah","Yigal");
+    T.addMother("Terah","Miri");
+    T.addFather("Rivka","Baroh");
+    T.addMother("Rivka","Zipi");
+    CHECK(T.find("father")==string("Yaakov"));
+    CHECK(T.find("great-grandfather")==string("Avraham"));
+    CHECK(T.find("great-great-grandfather")==string("Terah"));
+    CHECK_THROWS(T.find("great-grandmother")); 
+    CHECK(T.find("great-grear-great-grandfather")==string("Yigal"));
+    CHECK(T.find("grandmother")==string("Rivka"));
+    CHECK(T.find("great-grandmother")==string("Zipi"));
+    CHECK_THROWS(T.find("great-great-great-great-grandmother")); 
+    T.remove("Isaac");
+    CHECK_THROWS(T.find("great-great-grandmother"));
+    CHECK_THROWS(T.find("great-great-grandfather"));
+    T.remove("Rivka");
+    CHECK_THROWS(T.find("grandmother"));
+    CHECK_THROWS(T.find("grandfather"));
+ 
+
+}
