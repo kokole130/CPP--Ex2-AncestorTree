@@ -6,7 +6,7 @@ using namespace family;
 
 
 // Functions to make global tree
-Tree& makeTree(){
+Tree makeTree(){
     Tree T("Yosef");
 	T.addFather("Yosef", "Yaakov")   // Tells the tree that the father of Yosef is Yaakov.
 	 .addMother("Yosef", "Rachel")   // Tells the tree that the mother of Yosef is Rachel.
