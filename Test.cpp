@@ -2,60 +2,52 @@
 #include "FamilyTree.hpp"
 #include <string>
 using namespace std;
-
-/*findRelation - gets a name and return the string of all connective family ,
-for example T.findRelation("kar") return "wife/cousin" - because in adam tree
-the way to arrive "ham" is with "hava" (adam's wife) and then "ham" (hava's cousin).
-by the way - if there is not name like this in the tree we should throw exception.
-*/
-
-/*find - the opposite function - gets a connective string and return the name of the person
-who sustains this relation - for example - T.find("wife/cousin") return "ham"
-by the way - if there is not relation like this in the tree we should throw exception*/
-
-/* remove - gets a name and remove him and all his parent and all their relations
-from the tree - for example - T.remove("ham") will remove "ham","yefet","kar" and "posher"
-by the way - if there is not name like this in the tree we should throw exception.*/
-
-/*addFather/Mother - gets a name of father/mother and name for this son we want to add his father/mother
-and add it to the tree. by the way - if there exist a name of his father/mother we should throw exception.*/
-
-//-------------------- use this information for execute the checks correctly------------------//
+using namespace family;
 
 
-// Functions to make global trees - T,T2.
-FamilyTree makeTree(){
-    FamilyTree T;   
-    T.addNew("adam",'m');
-    T.addNew("adam", 'm');
-    T.addNew("hava", 'f', 'w', "adam");
-    T.addNew("shem", 'm', 'c', "adam");
-    T.addNew("ham", 'm', 'c', "hava");
-    T.addNew("yefet", 'm', 's', "ham");
-    T.addNew("kar", 'f', 'w', "ham");
-    T.addNew("posher", 'm', 'c', "ham");
-    return T;
+// Functions to make global trees - T1,T2,T3.
+Tree& makeTree(){
+    Tree T1("Omri");
+    T1.addFather("Omri", "adam");
+    T1.addMother("Omri", "hava");
+    T1.addMother("Omri", "havasa");
+    T1.addFather("Omri", "hamim");
+    T1.addMother("Omri", "hamima");
+    T1.addMother("Omri", "hamosta");
+    return T1;
 }
 
-FamilyTree makeTree2(){
-    FamilyTree T2;
+Tree& makeTree2(){
+    Tree T2("Ron");
+    T2.addFather("ronius");
+    T2.addMother("roniousa");
+    T2.addFather("dalar");
     return T2;
 }
+
+Tree& makeTree3(){
+    Tree T3("Yogev");
+    T3.addMother("dana");
+    T3.addFather("dan");
+
+    return T3;
+}
+
 
 // Test Cases
 
 TEST_CASE("Unrelated Case"){
-    FamilyTree T = makeTree();
-    CHECK(T.findRelation("zz", 's') == string("unrelated"));
-	CHECK(T.findRelation("gg", 'c') == string("unrelated"));
-	CHECK(T.findRelation("kk", 'w') == string("unrelated"));
-	CHECK(T.findRelation("vvf", 'g') == string("unrelated"));
-	CHECK(T.findRelation("ddf", 'f') == string("unrelated"));
-	CHECK(T.findRelation("tth", 'm') == string("unrelated"));
-	CHECK(T.findRelation("uuk", 'u') == string("unrelated"));
-	CHECK(T.findRelation("qq", 'a') == string("unrelated"));
-	CHECK(T.findRelation("qqe", 'c') == string("unrelated"));
-	CHECK(T.findRelation("rqwdd", 'c') == string("unrelated"));
+    Tree T = makeTree();
+    CHECK(T.relation("zz", 's') == string("unrelated"));
+	CHECK(T.relation("gg", 'c') == string("unrelated"));
+	CHECK(T.relation("kk", 'w') == string("unrelated"));
+	CHECK(T.relation("vvf", 'g') == string("unrelated"));
+	CHECK(T.relation("ddf", 'f') == string("unrelated"));
+	CHECK(T.relation("tth", 'm') == string("unrelated"));
+	CHECK(T.relation("uuk", 'u') == string("unrelated"));
+	CHECK(T.relation("qq", 'a') == string("unrelated"));
+	CHECK(T.relation("qqe", 'c') == string("unrelated"));
+	CHECK(T.relation("rqwdd", 'c') == string("unrelated"));
 }
 
 TEST_CASE("Father/Mother find Case"){

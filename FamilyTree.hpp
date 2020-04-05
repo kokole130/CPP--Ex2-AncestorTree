@@ -19,7 +19,7 @@ class Tree {
             root.name=name;
         }
 
-        string relation(string name); // we need to fix it. 
+        string relation(string name);
         string find(string relation);
         void display();
         void remove(string name);

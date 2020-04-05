@@ -7,11 +7,11 @@ using namespace std;
 using namespace family;
 
 
-string Tree::relation(string name){//find name of the related
+string Tree::relation(string name){
     return "";
 }
 
-string Tree::find(string relation){//find the relation between to names
+string Tree::find(string relation){
     return "";
 }
 
