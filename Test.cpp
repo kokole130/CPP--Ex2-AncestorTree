@@ -7,13 +7,13 @@ using namespace family;
 
 // Functions to make global trees - T1,T2,T3.
 Tree& makeTree(){
-    Tree T1("Omri");
-    T1.addFather("Omri", "adam");
-    T1.addMother("Omri", "hava");
-    T1.addMother("Omri", "havasa");
-    T1.addFather("Omri", "hamim");
-    T1.addMother("Omri", "hamima");
-    T1.addMother("Omri", "hamosta");
+    Tree T1("yosef");
+	T1.addFather("Yosef", "Yaakov")   // Tells the tree that the father of Yosef is Yaakov.
+	 .addMother("Yosef", "Rachel")   // Tells the tree that the mother of Yosef is Rachel.
+	 .addFather("Yaakov", "Isaac")
+	 .addMother("Yaakov", "Rivka")
+	 .addFather("Isaac", "Avraham")
+	 .addFather("Avraham", "Terah");
     return T1;
 }
 
@@ -100,52 +100,9 @@ TEST_CASE("Exception Case") {
 }
 
 TEST_CASE("remove function") {
-    FamilyTree T = makeTree();
-    T.addFather("yaakov","adam");
-    T.addMother("zipi","adam");
-    T.addMother("mira","hava");
-    T.addFather("yagai","hava");
-    T.addNew("yaakov",'m','s',"haim");
-    T.addNew("juli",'f','c',"mira");
-    CHECK(T.findRelation("adam",'c')==string("shem"));
-    CHECK(T.findRelation("adam",'f')==string("yaakov"));
-    CHECK(T.findRelation("adam",'m')==string("zipi"));
-    T.remove("adam");//remove all the tree
-    CHECK(T.findRelation("shem")==string("unrelated"));
-    CHECK(T.findRelation("yaakov")==string("unrelated"));
-    CHECK(T.findRelation("zipi")==string("unrelated"));
+    Tree T = makeTree();
+    CHECK(T.find("yaakov") == string("Dana"));
 
-    FamilyTree T2 = makeTree2();
-    T2.addNew("adam", 'm');
-	T2.addNew("hava", 'f', 'w', "adam");
-	T2.addNew("shem", 'm', 'c', "adam");
-	T2.addNew("ham", 'm', 'c', "hava");
-	T2.addNew("yefet", 'm', 's', "ham");
-	T2.addNew("kar", 'f', 'w', "ham");
-	T2.addNew("posher", 'm', 'c', "ham");
-    T2.addFather("yaakov","adam");
-    T2.addMother("zipi","adam");
-    T2.addMother("mira","hava");
-    T2.addFather("yagai","hava");
-    T2.addNew("yaakov",'m','s',"haim");
-    T2.addNew("juli",'f','c',"mira");
-    T2.addNew("koral",'f','w',"yefet");
-    T2.addNew("moshe",'m','g',"posher");
-    T2.addNew("menash",'m','g',"shem");
-    T2.addNew("tikva",'f','c',"mira");
-    T2.addNew("roni",'f','w',"shem");
-    T2.addNew("ben",'m','s',"roni");
-    T2.addNew("lior",'m','g',"shem");
-    T2.addNew("miri",'f','w',"ben");
-    CHECK(T.findRelation("ham")==string("wife/cousin"));
-    CHECK(T.findRelation("yefet")==string("wife/cousin/sibling"));
-    CHECK(T.findRelation("kar")==string("wife/cousin/wife"));
-    T2.remove("hava");//remove hava (wife of the original tree's person)
-    CHECK(T.findRelation("ham")==string("unrelated"));
-    CHECK(T.findRelation("yefet")==string("unrelated"));
-    CHECK(T.findRelation("kar")==string("unrelated"));
-    CHECK(T.findRelation("zipi")==string("mother"));
-    CHECK(T.findRelation("mira")==string("unrelated"));
 }
 
 TEST_CASE("Find relation with relation assign"){
