@@ -106,28 +106,28 @@ void Tree::Mother(Node* root,string name,string mother){
 }
 
 
-Tree makeTree(){
-    Tree T("Yosef");
-	T.addFather("Yosef", "Yaakov")   // Tells the tree that the father of Yosef is Yaakov.
-	 .addMother("Yosef", "Rachel")   // Tells the tree that the mother of Yosef is Rachel.
-	 .addFather("Yaakov", "Isaac")
-	 .addMother("Yaakov", "Rivka")
-	 .addFather("Isaac", "Avraham")
-	 .addFather("Avraham", "Terah");
-    return T;
-}
+// Tree makeTree(){
+//     Tree T("Yosef");
+// 	T.addFather("Yosef", "Yaakov")   // Tells the tree that the father of Yosef is Yaakov.
+// 	 .addMother("Yosef", "Rachel")   // Tells the tree that the mother of Yosef is Rachel.
+// 	 .addFather("Yaakov", "Isaac")
+// 	 .addMother("Yaakov", "Rivka")
+// 	 .addFather("Isaac", "Avraham")
+// 	 .addFather("Avraham", "Terah");
+//     return T;
+// }
 
-int main(int argc, char const *argv[])
-{
-    Tree T("Ron");
-    T.addMother("Ron","Malka");
-    T.addFather("Ron","Ezra");
-    T.addFather("Malka","Isaac");
-    T.addMother("Malka","Miriam");
-    T.addFather("Ezra","Shlomo");
-    T.addMother("Ezra","Marcel");
-    T.display();
-    return 0;
-}
+// int main(int argc, char const *argv[])
+// {
+//     Tree T("Ron");
+//     T.addMother("Ron","Malka");
+//     T.addFather("Ron","Ezra");
+//     T.addMother("Malka","Miriam");
+//     T.addFather("Malka","Itzhak");
+//     T.addMother("Ezra","Marcel");
+//     T.addFather("Ezra","Shlomo");
+//     T.display();
+//     return 0;
+// }
 
 
