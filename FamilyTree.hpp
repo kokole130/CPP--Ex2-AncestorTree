@@ -32,6 +32,9 @@ class Tree {
         void Father(Node* root,string name,string father);
         void Mother(Node* root,string name,string mother);
         void scan(Node* root);
+        void printTree(Node* node, int space);
+        void printTrees(Node* node);
+
 
 
 

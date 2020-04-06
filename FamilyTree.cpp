@@ -17,8 +17,10 @@ string Tree::find(string relation){
 }
 
 void Tree::display(){
-    cout<<"      "+this->root->name<<endl;
-    scan(this->root);
+    printTrees(this->root);
+    // printTree(this->root,0);
+    // cout<<"      "+this->root->name<<endl;
+    // scan(this->root);
 }
 
 void Tree::scan(Node* root){
@@ -35,6 +37,32 @@ void Tree::scan(Node* root){
         cout<<"     >"<<root->F->name<<endl;
         scan(root->F);
     }
+}
+
+void Tree::printTree(Node* node, int space){
+    if(node==NULL){
+        return;
+    }
+    space+=10;
+
+    printTree(node->F,space);
+
+    cout<<endl;
+    for(int i=10;i<space;i++){
+        cout<<" ";
+    }
+    cout<<root->name<<"\n";
+
+    printTree(node->M,space);
+}
+
+void Tree::printTrees(Node* node){
+    if(node==NULL){
+        return;
+    }
+    cout<<node->name<<endl;
+    printTrees(node->M);
+    printTrees(node->F);
 }
 
 void Tree::remove(string name){
@@ -54,6 +82,7 @@ void Tree::Father(Node* root,string name,string father){
             temp->M=NULL;
             temp->name=father;
             root->F=temp;
+            return;
         }
         else{
             //throw exception already have father
@@ -86,6 +115,7 @@ void Tree::Mother(Node* root,string name,string mother){
             temp->M=NULL;
             temp->name=mother;
             root->M=temp;
+            return;
         }
         else{
             //throw exception already have father
@@ -117,17 +147,17 @@ void Tree::Mother(Node* root,string name,string mother){
 //     return T;
 // }
 
-// int main(int argc, char const *argv[])
-// {
-//     Tree T("Ron");
-//     T.addMother("Ron","Malka");
-//     T.addFather("Ron","Ezra");
-//     T.addMother("Malka","Miriam");
-//     T.addFather("Malka","Itzhak");
-//     T.addMother("Ezra","Marcel");
-//     T.addFather("Ezra","Shlomo");
-//     T.display();
-//     return 0;
-// }
+int main(int argc, char const *argv[])
+{
+    Tree T("Ron");
+    T.addMother("Ron","Malka");
+    T.addFather("Ron","Ezra");
+    T.addMother("Malka","Miriam");
+    T.addFather("Malka","Itzhak");
+    T.addMother("Ezra","Marcel");
+    T.addFather("Ezra","Shlomo");
+    T.display();
+    return 0;
+}
 
 
