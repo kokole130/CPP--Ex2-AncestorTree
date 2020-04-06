@@ -17,26 +17,7 @@ string Tree::find(string relation){
 }
 
 void Tree::display(){
-    printTrees(this->root);
-    // printTree(this->root,0);
-    // cout<<"      "+this->root->name<<endl;
-    // scan(this->root);
-}
-
-void Tree::scan(Node* root){
-    if(root->M!=NULL&&root->F!=NULL){
-        cout<<root->M->name<<"<    >"<<root->F->name<<endl;
-        scan(root->F);
-        scan(root->M);
-    }
-    else if(root->M!=NULL&&root->F==NULL){
-        cout<<root->M->name<<"<      "<<endl;
-        scan(root->M);        
-    }
-    else if(root->M==NULL&&root->F!=NULL){
-        cout<<"     >"<<root->F->name<<endl;
-        scan(root->F);
-    }
+    printTree(this->root,0);
 }
 
 void Tree::printTree(Node* node, int space){
@@ -51,18 +32,9 @@ void Tree::printTree(Node* node, int space){
     for(int i=10;i<space;i++){
         cout<<" ";
     }
-    cout<<root->name<<"\n";
+    cout<<node->name<<endl;
 
     printTree(node->M,space);
-}
-
-void Tree::printTrees(Node* node){
-    if(node==NULL){
-        return;
-    }
-    cout<<node->name<<endl;
-    printTrees(node->M);
-    printTrees(node->F);
 }
 
 void Tree::remove(string name){
@@ -134,18 +106,6 @@ void Tree::Mother(Node* root,string name,string mother){
         }
     }
 }
-
-
-// Tree makeTree(){
-//     Tree T("Yosef");
-// 	T.addFather("Yosef", "Yaakov")   // Tells the tree that the father of Yosef is Yaakov.
-// 	 .addMother("Yosef", "Rachel")   // Tells the tree that the mother of Yosef is Rachel.
-// 	 .addFather("Yaakov", "Isaac")
-// 	 .addMother("Yaakov", "Rivka")
-// 	 .addFather("Isaac", "Avraham")
-// 	 .addFather("Avraham", "Terah");
-//     return T;
-// }
 
 int main(int argc, char const *argv[])
 {
