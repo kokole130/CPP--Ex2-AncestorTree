@@ -202,6 +202,33 @@ void Tree::Mother(Node* root,string name,string mother){
     }
 }
 
+void Tree::remove(string name){
+   FindRemoveNode(this->root,name);
+
+}
+
+void Tree::FindRemoveNode(Node* root,string name){
+    if(root==NULL){
+            return;
+    }
+    if(root->getName()==name){
+        removeNode(root);
+        return;
+    }
+    FindRemoveNode(root->F,name);
+    FindRemoveNode(root->M,name);
+        
+}
+
+void Tree::removeNode(Node* root){
+    if(root==NULL){
+        return;
+    }
+    removeNode((root->F));
+    removeNode((root->M));
+    delete root;
+}
+
 int main(int argc, char const *argv[])
 {
     Tree T("Ron");

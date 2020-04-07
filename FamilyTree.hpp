@@ -3,23 +3,31 @@
 #include <iostream>
 
 using namespace std;
-namespace family{
-typedef struct Node{//each node in the tree
-        string name;//name of the person
-        struct Node* F;//one node for father
-        struct Node* M;//one node for mother
-}Node;
 
-class Tree {
-    public:
-        Node* root;
-        Tree(string name){
-            Node* temp=new Node;
-            temp->M=NULL;
-            temp->F=NULL;
-            temp->name=name;
-            root=temp;
+class Node{//each node in the tree
+        private:
+            string name;//name of the person
+
+
+        public:
+            Node* F;//one node for father
+            Node* M;//one node for mother
+            Node(string name):name(name),F(NULL),M(NULL){
+
         }
+
+            string getName(){
+                return this->name;
+             }
+};
+
+namespace family{
+    class Tree {
+        public:
+            Node* root;
+            Tree(string name){
+                this->root=new Node(name);
+             }
 
         string relation(string name);
         string find(string relation);
@@ -35,7 +43,9 @@ class Tree {
         void printTree(Node* node, int space);
         void printTrees(Node* node);
         string findrelation(Node* node,string name, string relation);
-        string Tree::findGreat(Node* node, string relation);
+        string findGreat(Node* node, string relation);
+        void FindRemoveNode(Node* root,string name);
+        void removeNode(Node* root);
 
 
 };
