@@ -293,25 +293,26 @@ int main(int argc, char const *argv[])
     T.addFather("Ezra","Shlomo");
     T.addFather("Marcel","Bibi");
     T.addMother("Bibi","Tsipora");
+    T.addFather("Bibi","Omer");
     //cout<<T.relation("Tsipora")<<endl;
     //T.display();
     //T.remove("Marcel");
     //T.display();
-    T.remove("Ezra");
-    T.display();
+    //T.remove("Ezra");
+    //T.display();
     //T.display();
     //T.remove("Ron");
-    T.display();
-    cout<<T.find("mother")<<endl;
-    cout<<T.find("father")<<endl;
-    cout<<T.find("grandmother")<<endl;
-    cout<<T.find("me")<<endl;
-    cout<<T.find("great-grandfather")<<endl;
-    cout<<T.find("great-great-grandmother")<<endl;
-    cout<<T.find("great-great-great-grandmother")<<endl;
-    cout<<T.find("great-great-grandfather")<<endl;
-    cout<<T.find("grandfather")<<endl;
-    cout<<T.find("great-great-grandfather")<<endl;
+    //T.display();
+    // cout<<T.find("mother")<<endl;
+    // cout<<T.find("father")<<endl;
+    // cout<<T.find("grandmother")<<endl;
+    // cout<<T.find("me")<<endl;
+    // cout<<T.find("great-grandfather")<<endl;
+    cout<<T.find("great-great-grandmother")<<endl; //Tsipora
+    // cout<<T.find("great-great-great-grandmother")<<endl;
+    cout<<T.find("great-great-grandfather")<<endl; //Omer
+    // cout<<T.find("grandfather")<<endl;
+    // cout<<T.find("great-great-grandfather")<<endl;
     return 0;
 }
 
