@@ -90,56 +90,65 @@ string Tree::find(string relation){
         }else if(this->root->M->F != NULL){
             return this->root->M->F->getName();
         }else{
-            // throw exception
+            // throw 
         }
     }else{
-        string ans=findGreat(this->root,relation);
+        string fm = findGreat(this->root->F,relation);
+        string mm = findGreat(this->root->M,relation);
+        string mf = findGreat(this->root->M,relation);
+        string ff = findGreat(this->root->F,relation);
 
-        if(ans==string("not found")){
+        if( fm != "not found"){
+            return fm;
+        }else if( mm != "not found"){
+            return mm;
+        }else if( ff != "not found"){
+            return ff;
+        }else if( mf != "not found"){
+            return mf;
+        }else{
             //throw
         }
-        else return ans;
     }
+    return "";
 }
 
 string Tree::findGreat(Node* node, string relation){
-    if(relation==string("Grandfather")||relation==string("grandfather")){
-        if(node->F->F!=NULL){
-            return node->F->F->getName();
-        }
-        else if(node->M->F!=NULL){
-            return node->M->F->getName();
-        }
-        else{
+    if(relation == "grandfather" || relation == "Grandfather"){
+        if(node->F!=NULL){
+            return node->F->getName();
+        }else{
             return "not found";
         }
     }
-    else if(relation==string("Grandmother")||relation==string("grandmother")){
-        if(node->F->M!=NULL){
-            return node->F->M->getName();
-        }
-        else if(node->M->M!=NULL){
-            return node->M->M->getName();
-        }
-        else{
+    else if(relation == "grandmother" || relation == "Grandmother"){
+        if(node->M != NULL){
+            return node->M->getName();
+        }else{
             return "not found";
         }
     }
 
-    if(relation.length()<6){    //there is not "great-"
-        //throw
+    if(relation.length() < 5){    //there is not "great- and not grandmother\grandfather"
+        return "not found";
     }
-    
-    if(relation.substr(0,6) == "great-" || relation.substr(0,6) == "Great-"){
-        string ans="not found";
-        relation = relation.substr(6,relation.length());
-        string mom=findGreat(node->M,relation);
-        if(mom!=string("not found")){
-            ans=mom;
+
+    string ans = "not found";
+
+    if( relation.substr(0,6) == "great-" || relation.substr(0,6) == "Great-"){
+        relation = relation.substr(6,relation.length()-6);
+        
+        if(node->M != NULL){
+            string mom = findGreat(node->M,relation);
+            if(mom != "not found"){
+                ans=mom;
+            }
         }
-        string papy=findGreat(node->F,relation);
-        if(papy!=string("not found")){
-            ans=papy;
+        if(node->F != NULL){
+            string papy = findGreat(node->F,relation);
+            if(papy != "not found"){
+                ans=papy;
+            }
         }
         return ans;
     }
@@ -284,12 +293,25 @@ int main(int argc, char const *argv[])
     T.addFather("Ezra","Shlomo");
     T.addFather("Marcel","Bibi");
     T.addMother("Bibi","Tsipora");
-   // cout<<T.relation("Tsipora")<<endl;
-   // T.display();
-//  T.remove("Marcel");
-    // T.display();
+    //cout<<T.relation("Tsipora")<<endl;
+    //T.display();
+    //T.remove("Marcel");
+    //T.display();
     T.remove("Ezra");
     T.display();
+    //T.display();
+    //T.remove("Ron");
+    T.display();
+    cout<<T.find("mother")<<endl;
+    cout<<T.find("father")<<endl;
+    cout<<T.find("grandmother")<<endl;
+    cout<<T.find("me")<<endl;
+    cout<<T.find("great-grandfather")<<endl;
+    cout<<T.find("great-great-grandmother")<<endl;
+    cout<<T.find("great-great-great-grandmother")<<endl;
+    cout<<T.find("great-great-grandfather")<<endl;
+    cout<<T.find("grandfather")<<endl;
+    cout<<T.find("great-great-grandfather")<<endl;
     return 0;
 }
 
