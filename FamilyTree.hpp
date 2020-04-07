@@ -35,7 +35,7 @@ class Tree {
         void printTree(Node* node, int space);
         void printTrees(Node* node);
         string findrelation(Node* node,string name, string relation);
-
+        string Tree::findGreat(Node* node, string relation);
 
 
 };

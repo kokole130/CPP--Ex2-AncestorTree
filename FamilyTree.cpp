@@ -60,7 +60,52 @@ string Tree::findrelation(Node* node,string name, string relation){
 }
 
 string Tree::find(string relation){
-    return "";
+    if(relation == "me"){
+        return this->root->name;
+    }else if(relation == "mother" || relation == "Mother"){
+        return this->root->M->name;
+    }else if(relation == "father" || relation == "Father"){
+        return root->F->name;
+    }else if(relation == "grandmother" || relation == "Grandmother"){
+        if(this->root->F->M != NULL){
+            return this->root->F->M->name;
+        }else if(this->root->M->M != NULL){
+            return this->root->M->M->name;
+        }else{
+            return "unrelated";
+            // need to throw exception
+        }
+    }else if(relation == "grandfather" || relation == "Grandfather"){
+        if(this->root->F->F != NULL){
+            return this->root->F->F->name;
+        }else if(this->root->M->F != NULL){
+            return this->root->M->F->name;
+        }else{
+            return "unrelated";
+            // need to throw exception
+        }
+    }else{
+        return findGreat(this->root,relation);
+    }
+}
+
+string Tree::findGreat(Node* node, string relation){
+
+    string greatEnd = "";
+
+    if(relation.substr(0,6) == "great-" || relation.substr(0,6) == "Great-"){
+        string great1 = relation.substr(6,relation.length());
+        greatEnd = "great-" + greatEnd;
+        return (find(great1));
+    }
+
+    //this if case is for another string that unrelated. (dont begin at "great")
+    if(greatEnd == ""){
+        return "unreleated";
+        // i need to throw an exception;
+    }
+
+    return greatEnd;
 }
 
 void Tree::display(){
