@@ -16,9 +16,9 @@ class Node{//each node in the tree
 
         }
 
-            string getName(){
-                return this->name;
-             }
+        string getName(){
+            return this->name;
+        }
 };
 
 namespace family{
@@ -40,8 +40,7 @@ namespace family{
         void Father(Node* root,string name,string father);
         void Mother(Node* root,string name,string mother);
         void scan(Node* root);
-        void printTree(Node* node, int space);
-        void printTrees(Node* node);
+        void printTree(Node* node, int space,string gender);
         string findrelation(Node* node,string name, string relation);
         string findGreat(Node* node, string relation);
         void FindRemoveNode(Node* root,string name);

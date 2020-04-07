@@ -61,7 +61,7 @@ string Tree::findrelation(Node* node,string name, string relation){
 
 string Tree::find(string relation){
     if(relation == "me"){
-        if(root->getName!=NULL){
+        if(root!=NULL){
             return this->root->getName();
         }else{
             //throw
@@ -105,10 +105,10 @@ string Tree::find(string relation){
 string Tree::findGreat(Node* node, string relation){
     if(relation==string("Grandfather")||relation==string("grandfather")){
         if(node->F->F!=NULL){
-            return node->F->F->getName;
+            return node->F->F->getName();
         }
         else if(node->M->F!=NULL){
-            return node->M->F->getName;
+            return node->M->F->getName();
         }
         else{
             return "not found";
@@ -116,10 +116,10 @@ string Tree::findGreat(Node* node, string relation){
     }
     else if(relation==string("Grandmother")||relation==string("grandmother")){
         if(node->F->M!=NULL){
-            return node->F->M->getName;
+            return node->F->M->getName();
         }
         else if(node->M->M!=NULL){
-            return node->M->M->getName;
+            return node->M->M->getName();
         }
         else{
             return "not found";
@@ -147,24 +147,24 @@ string Tree::findGreat(Node* node, string relation){
 }
 
 void Tree::display(){
-    printTree(this->root,0);
+    printTree(this->root,0,"Root");
 }
 
-void Tree::printTree(Node* node, int space){
+void Tree::printTree(Node* node, int space,string gender){
     if(node==NULL){
         return;
     }
     space+=10;
 
-    printTree(node->F,space);
+    printTree(node->F,space,"F");
 
     cout<<endl;
     for(int i=10;i<space;i++){
         cout<<" ";
     }
-    cout<<node->getName()<<endl;
+    cout<<gender+":"+node->getName()<<endl;
 
-    printTree(node->M,space);
+    printTree(node->M,space,"M");
 }
  
 Tree& Tree::addFather(string name,string father){
@@ -286,9 +286,9 @@ int main(int argc, char const *argv[])
     T.addMother("Bibi","Tsipora");
    // cout<<T.relation("Tsipora")<<endl;
    // T.display();
-    T.remove("Marcel");
-   // T.display();
-    T.remove("Ron");
+//  T.remove("Marcel");
+    // T.display();
+    T.remove("Ezra");
     T.display();
     return 0;
 }
