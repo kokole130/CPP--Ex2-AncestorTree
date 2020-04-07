@@ -61,25 +61,28 @@ string Tree::findrelation(Node* node,string name, string relation){
 
 string Tree::find(string relation){
     if(relation == "me"){
-        return this->root->getName();
+        if(root->getName!=NULL){
+            return this->root->getName();
+        }else{
+            //throw
+        }
     }else if(relation == "mother" || relation == "Mother"){
         if(root->M!=NULL){
             return this->root->M->getName();
+        } else{ //trow;
         }
-        else //trow;
     }else if(relation == "father" || relation == "Father"){
         if(root->F!=NULL){
             return root->F->getName();
+        }else{ //throw
         }
-        else //throw
     }else if(relation == "grandmother" || relation == "Grandmother"){
         if(this->root->F->M != NULL){
             return this->root->F->M->getName();
         }else if(this->root->M->M != NULL){
             return this->root->M->M->getName();
         }else{
-            return "unrelated";
-            // need to throw exception
+            //throw 
         }
     }else if(relation == "grandfather" || relation == "Grandfather"){
         if(this->root->F->F != NULL){
@@ -87,11 +90,11 @@ string Tree::find(string relation){
         }else if(this->root->M->F != NULL){
             return this->root->M->F->getName();
         }else{
-            return "unrelated";
-            // need to throw exception
+            // throw exception
         }
     }else{
         string ans=findGreat(this->root,relation);
+
         if(ans==string("not found")){
             //throw
         }
@@ -102,10 +105,10 @@ string Tree::find(string relation){
 string Tree::findGreat(Node* node, string relation){
     if(relation==string("Grandfather")||relation==string("grandfather")){
         if(node->F->F!=NULL){
-
+            return node->F->F->getName;
         }
         else if(node->M->F!=NULL){
-
+            return node->M->F->getName;
         }
         else{
             return "not found";
@@ -113,19 +116,18 @@ string Tree::findGreat(Node* node, string relation){
     }
     else if(relation==string("Grandmother")||relation==string("grandmother")){
         if(node->F->M!=NULL){
-
+            return node->F->M->getName;
         }
         else if(node->M->M!=NULL){
-
+            return node->M->M->getName;
         }
         else{
             return "not found";
         }
     }
 
-    if(relation.length()<6){//there is not "grand-"
+    if(relation.length()<6){    //there is not "great-"
         //throw
-        
     }
     
     if(relation.substr(0,6) == "great-" || relation.substr(0,6) == "Great-"){
