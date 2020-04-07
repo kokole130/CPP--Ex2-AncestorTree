@@ -8,7 +8,54 @@ using namespace family;
 
 
 string Tree::relation(string name){
+    if(this->root->F->name==name){
+        return "father";
+    }
+    if(this->root->M->name==name){
+        return "mother";
+    }
+    if(this->root->F->M->name==name||this->root->M->M->name==name){
+        return "grandmother";
+    }
+    if(this->root->F->F->name==name||this->root->M->F->name==name){
+        return "grandfather";
+    }
+    string fm=findrelation(this->root->F->M,name,"grandmother");
+    string ff=findrelation(this->root->F->F,name,"grandfather");
+    string mm=findrelation(this->root->M->M,name,"grandmother");
+    string mf=findrelation(this->root->M->F,name,"grandfather");
+    if(fm!="unrelated"){
+        return fm;
+    }
+    else if(ff!="unrelated"){
+        return ff;
+    }
+    else if(mm!="unrelated"){
+        return mm;
+    }
+    else if(mf!="unrelated"){
+        return mf;
+    }
+    else{
+        return "unrelated";
+    }
+}
 
+string Tree::findrelation(Node* node,string name, string relation){
+    if(node==NULL){
+        return "unrelated";
+    }
+    if(node->name==name){
+        return relation;
+    }
+    string s1=findrelation(node->F,name,"great-"+relation.substr(0,relation.length()-6)+"father");
+    string s2=findrelation(node->M,name,"great-"+relation.substr(0,relation.length()-6)+"mother");
+    if(s1!="unrelated"){
+        return s1;
+    }
+    else if(s2!="unrelated"){
+        return s2;
+    }
     return "";
 }
 
@@ -116,7 +163,10 @@ int main(int argc, char const *argv[])
     T.addFather("Malka","Itzhak");
     T.addMother("Ezra","Marcel");
     T.addFather("Ezra","Shlomo");
-    T.display();
+    T.addFather("Marcel","Bibi");
+    T.addMother("Bibi","Tsipora");
+    cout<<T.relation("Tsipora")<<endl;
+    //T.display();
     return 0;
 }
 
