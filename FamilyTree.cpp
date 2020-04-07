@@ -92,11 +92,11 @@ string Tree::find(string relation){
 string Tree::findGreat(Node* node, string relation){
 
     string greatEnd = "";
-    
+
     if(relation.substr(0,6) == "great-" || relation.substr(0,6) == "Great-"){
         string great1 = relation.substr(6,relation.length());
         greatEnd = "great-" + greatEnd;
-        if(relation.length == 17){
+        if(great1.length == 17){
             return (greatEnd + find(great1));
         }
         return (find(great1));
