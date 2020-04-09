@@ -25,8 +25,10 @@ namespace family{
     class Tree {
         public:
             Node* root;
+            int size;
             Tree(string name){
                 this->root=new Node(name);
+                size=1;
              }
 
         string relation(string name);
