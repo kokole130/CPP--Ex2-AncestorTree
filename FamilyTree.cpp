@@ -9,16 +9,19 @@ using namespace family;
 /*function that returns the relation by the name*/
 
 string Tree::relation(string name){
-    if(this->root->F->getName()==name){
+    if(this->root->getName()==name){
+        return "me";
+    }
+    if(this->root!=NULL&&this->root->F->getName()==name){
         return "father";
     }
-    if(this->root->M->getName()==name){
+    if(this->root->M!=NULL&&this->root->M->getName()==name){
         return "mother";
     }
-    if(this->root->F->M->getName()==name||this->root->M->M->getName()==name){
+    if((this->root->F->M!=NULL&&this->root->F->M->getName()==name)||(this->root->M->M!=NULL&&this->root->M->M->getName()==name)){
         return "grandmother";
     }
-    if(this->root->F->F->getName()==name||this->root->M->F->getName()==name){
+    if((this->root->F->F!=NULL&&this->root->F->F->getName()==name)||(this->root->M->F!=NULL&&this->root->M->F->getName()==name)){
         return "grandfather";
     }
     string fm=findrelation(this->root->F->M,name,"grandmother");//recursive call for father's mother subtree
@@ -58,7 +61,7 @@ string Tree::findrelation(Node* node,string name, string relation){
     else if(s2!="unrelated"){
         return s2;
     }
-    return "";
+    return "unrelated";
 }
 /* function that gets a relation of someone on the tree and returns his name  - if exist*/
 string Tree::find(string relation){
@@ -251,66 +254,70 @@ void Tree::remove(string name){
     }
     int s=this->size;
     cout<<"size before:"<<s<<endl;
-   FindRemoveNode(this->root,name);
-   if(this->size==s){
+    FindRemoveNode(&(this->root->M),name);
+    FindRemoveNode(&(this->root->F),name);
+    if(this->size==s){
        //cout<<"size after:"<<s<<endl;
        throw std::logic_error("There is not a name in the tree\n");
-   }
-   cout<<"size after:"<<this->size<<endl;
+    }
+    cout<<"size after:"<<this->size<<endl;
 
 }
 /*Side recursive function that find the node we want to remove */
-void Tree::FindRemoveNode(Node* root,string name){
-    if(root->M==NULL){
+void Tree::FindRemoveNode(Node** root,string name){
+    if(*root==NULL){
         return;
     }
-    if(root->F==NULL){
+    if((*root)->getName()==name){
+        removeNode(root);
+        //root=NULL;
         return;
     }
-    if(root->M->getName()==name){
-        removeNode(root->M);
-        root->M=NULL;
-        return;
-    }
-    if(root->F->getName()==name){
-        removeNode(root->F);
-         root->F=NULL;
-        return;
-    }
-    FindRemoveNode(root->F,name);
-    FindRemoveNode(root->M,name);
+    FindRemoveNode(&((*root)->F),name);
+    FindRemoveNode(&((*root)->M),name);
         
 }
 
 /* Side recursive function that remove each node from this subtree */
-void Tree::removeNode(Node* root){
-    if(root==NULL){
+void Tree::removeNode(Node** root){
+    if(*root==NULL){
         return;
     }
-    removeNode((root->F));
-    removeNode((root->M));
-    root->F=NULL;
-    root->M=NULL;
-    delete root;
+    removeNode(&((*root)->F));
+    removeNode(&((*root)->M));
+    // root->F=NULL;
+    // root->M=NULL;
+    delete *root;
+    *root=NULL;
     this->size--;
 }
 
-int main(int argc, char const *argv[])
-{    Tree T("Yosef");
-	T.addFather("Yosef", "Yaakov")   // Tells the tree that the father of Yosef is Yaakov.
-	 .addMother("Yosef", "Rachel")   // Tells the tree that the mother of Yosef is Rachel.
-	 .addFather("Yaakov", "Isaac")
-	 .addMother("Yaakov", "Rivka")
-	 .addFather("Isaac", "Avraham")
-	 .addFather("Avraham", "Terah");
-    T.addFather("Terah","Yigal");
-    T.addMother("Terah","Miri");
-     T.addFather("Rivka","Baroh");
-    T.addMother("Rivka","Zipi");
-    T.display();
+int main(int argc, char const *argv[]){
+//     Tree T("Yosef");
+// 	T.addFather("Yosef", "Yaakov")   // Tells the tree that the father of Yosef is Yaakov.
+// 	 .addMother("Yosef", "Rachel")   // Tells the tree that the mother of Yosef is Rachel.
+// 	 .addFather("Yaakov", "Isaac")
+// 	 .addMother("Yaakov", "Rivka")
+// 	 .addFather("Isaac", "Avraham")
+// 	 .addFather("Avraham", "Terah");
+//     T.addFather("Terah","Yigal");
+//     T.addMother("Terah","Miri");
+//     T.addFather("Rivka","Baroh");
+//     T.addMother("Rivka","Zipi");
+//     T.display();
 //     T.remove("Isaac"); 
-//    T.display();
-    T.remove("Rivka");
+//     T.display();
+//     T.remove("Rivka");
+//     T.display();
+//     return 0;
+    Tree T("a");
+    T.addFather("a","aa");
+    // CHECK(T.relation("aa")==string("father"));
+    // CHECK(T.find("father") == string("aa"));
+    T.addFather("aa","aaa");
+    cout<<T.relation("aaa")<<endl;
+    // CHECK(T.relation("aaa")==string("grandfather"));
+    // CHECK(T.find("grandfather") == string("aaa"));
     T.display();
     return 0;
 }
