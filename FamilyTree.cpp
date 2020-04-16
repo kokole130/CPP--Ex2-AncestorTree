@@ -12,37 +12,70 @@ string Tree::relation(string name){
     if(this->root->getName()==name){
         return "me";
     }
-    if(this->root!=NULL&&this->root->F->getName()==name){
-        return "father";
+    if(this->root->F!=NULL){
+        if(this->root->F->getName()==name){
+            return "father";
+        }
     }
-    if(this->root->M!=NULL&&this->root->M->getName()==name){
-        return "mother";
+    if(this->root->M!=NULL){
+        if(this->root->M->getName()==name){
+            return "mother";
+        }
     }
-    if((this->root->F->M!=NULL&&this->root->F->M->getName()==name)||(this->root->M->M!=NULL&&this->root->M->M->getName()==name)){
-        return "grandmother";
+    if(this->root->F!=NULL){
+        if(this->root->F->M!=NULL){
+            if(this->root->F->M->getName()==name){
+                return "grandmother";
+            }
+        }
     }
-    if((this->root->F->F!=NULL&&this->root->F->F->getName()==name)||(this->root->M->F!=NULL&&this->root->M->F->getName()==name)){
-        return "grandfather";
+    if(this->root->M!=NULL){
+        if(this->root->M->M!=NULL){
+            if(this->root->M->M->getName()==name){
+                return "grandmother";
+            }
+        }
     }
-    string fm=findrelation(this->root->F->M,name,"grandmother");//recursive call for father's mother subtree
-    string ff=findrelation(this->root->F->F,name,"grandfather");//recursive call for father's father subtree
-    string mm=findrelation(this->root->M->M,name,"grandmother");//recursive call for mother's mother subtree
-    string mf=findrelation(this->root->M->F,name,"grandfather");//recursive call for mother's father subtree
-    if(fm!="unrelated"){
-        return fm;
+    if(this->root->F!=NULL){
+        if(this->root->F->F!=NULL){
+            if(this->root->F->F->getName()==name){
+                return "grandfather";
+            }
+        }
     }
-    else if(ff!="unrelated"){
-        return ff;
+    if(this->root->M!=NULL){
+        if(this->root->M->F!=NULL){
+            if(this->root->M->F->getName()==name){
+                return "grandfather";
+            }
+        }
     }
-    else if(mm!="unrelated"){
-        return mm;
+    string fm="";
+    string ff="";
+    string mm="";
+    string mf="";
+    if(this->root->F!=NULL){
+        fm=findrelation(this->root->F->M,name,"grandmother");//recursive call for father's mother subtree
+        ff=findrelation(this->root->F->F,name,"grandfather");//recursive call for father's father subtree
+        if(fm!="unrelated"){
+            return fm;
+        }
+        else if(ff!="unrelated"){
+            return ff;
+         }
     }
-    else if(mf!="unrelated"){
-        return mf;
+    if(this->root->M!=NULL){
+        mm=findrelation(this->root->M->M,name,"grandmother");//recursive call for mother's mother subtree
+        mf=findrelation(this->root->M->F,name,"grandfather");//recursive call for mother's father subtree
+        if(mm!="unrelated"){
+            return mm;
+        }
+        else if(mf!="unrelated"){
+            return mf;
+        }
     }
-    else{
-        return "unrelated";
-    }
+    return "unrelated";
+    
 }
 /*Side recursive function that checks the name of this relation and returns his relation- if exist*/
 string Tree::findrelation(Node* node,string name, string relation){
@@ -84,38 +117,36 @@ string Tree::find(string relation){
             throw std::logic_error("Father isn't exist\n");
         }
     }else if(relation == "grandmother" || relation == "Grandmother"){
-        if(this->root->F->M != NULL){
+        if(this->root->F!=NULL&&this->root->F->M != NULL){
             return this->root->F->M->getName();
-        }else if(this->root->M->M != NULL){
+        }else if(this->root->M!=NULL&&this->root->M->M != NULL){
             return this->root->M->M->getName();
         }else{
             throw std::logic_error("Grandmother isn't exist\n"); 
         }
     }else if(relation == "grandfather" || relation == "Grandfather"){
-        if(this->root->F->F != NULL){
+        if(this->root->F!=NULL&&this->root->F->F != NULL){
             return this->root->F->F->getName();
-        }else if(this->root->M->F != NULL){
+        }else if(this->root->M!=NULL&&this->root->M->F != NULL){
             return this->root->M->F->getName();
         }else{
             throw std::logic_error("Grandfather isn't exist\n"); 
         }
     }else{
-        string fm = findGreat(this->root->F,relation);//recursive call at father's subtree
-        string mm = findGreat(this->root->M,relation);//recursive call at mothers's subtree
-        string mf = findGreat(this->root->M,relation);//recursive call at mother's subtree
-        string ff = findGreat(this->root->F,relation);//recursive call at father's subtree
-
-        if( fm != "not found"){
-            return fm;
-        }else if( mm != "not found"){
-            return mm;
-        }else if( ff != "not found"){
-            return ff;
-        }else if( mf != "not found"){
-            return mf;
-        }else{
-            throw std::invalid_argument("The relation isn't exist\n");
+        
+        if(this->root->M!=NULL){
+            string m = findGreat(this->root->M,relation);//recursive call at mothers's subtree
+            if( m != "not found"){
+                return m;
+            }
         }
+        if(this->root->F!=NULL){
+            string f = findGreat(this->root->F,relation);//recursive call at father's subtree
+            if( f != "not found"){
+                return f;
+            }
+        }
+        throw std::invalid_argument("The relation isn't exist\n");
     }
     return "";
 }
@@ -187,15 +218,16 @@ void Tree::printTree(Node* node, int space,string gender){
 }
  /* Function that gets a name and father name and add the father to the tree */
 Tree& Tree::addFather(string name,string father){
-    Father(this->root,name,father);
+    if(father==""||name=="") throw std::logic_error("No Name\n");
+    Father(*(this->root),name,father);
     return *this;
 }
 /* Side recursive function that gets a root,name and father name and add the father at the correction 
 position */
-void Tree::Father(Node* root,string name,string father){
-    if(root->getName()==name){
-        if(root->F==NULL){
-            root->F=new Node(father);
+void Tree::Father(Node& root,string name,string father){
+    if(root.getName()==name){
+        if(root.F==NULL){
+            root.F=new Node(father);
             size++;
             return;
         }
@@ -204,20 +236,21 @@ void Tree::Father(Node* root,string name,string father){
         }
     }
     else{
-        if(root->M!=NULL&&root->F!=NULL){
-            Father(root->M,name,father);
-            Father(root->F,name,father);
+        if(root.M!=NULL&&root.F!=NULL){
+            Father(*(root.M),name,father);
+            Father(*(root.F),name,father);
         }
-        else if(root->M!=NULL&&root->F==NULL){
-            Father(root->M,name,father);
+        else if(root.M!=NULL&&root.F==NULL){
+            Father(*(root.M),name,father);
         }
-        else if(root->M==NULL&&root->F!=NULL){
-            Father(root->F,name,father);
+        else if(root.M==NULL&&root.F!=NULL){
+            Father(*(root.F),name,father);
         }
     }
 }
  /* Function that gets a name and mother name and add the father to the tree */
 Tree& Tree::addMother(string name,string mother){
+    if(mother==""||name=="") throw std::logic_error("No Name\n");
     Mother(this->root,name,mother);
     return *this;
 }
@@ -253,14 +286,11 @@ void Tree::remove(string name){
         throw std::logic_error("You cant remove the root\n");
     }
     int s=this->size;
-    cout<<"size before:"<<s<<endl;
     FindRemoveNode(&(this->root->M),name);
     FindRemoveNode(&(this->root->F),name);
     if(this->size==s){
-       //cout<<"size after:"<<s<<endl;
        throw std::logic_error("There is not a name in the tree\n");
     }
-    cout<<"size after:"<<this->size<<endl;
 
 }
 /*Side recursive function that find the node we want to remove */
@@ -292,7 +322,7 @@ void Tree::removeNode(Node** root){
     this->size--;
 }
 
-int main(int argc, char const *argv[]){
+// int main(int argc, char const *argv[]){
 //     Tree T("Yosef");
 // 	T.addFather("Yosef", "Yaakov")   // Tells the tree that the father of Yosef is Yaakov.
 // 	 .addMother("Yosef", "Rachel")   // Tells the tree that the mother of Yosef is Rachel.
@@ -310,16 +340,18 @@ int main(int argc, char const *argv[]){
 //     T.remove("Rivka");
 //     T.display();
 //     return 0;
-    Tree T("a");
-    T.addFather("a","aa");
-    // CHECK(T.relation("aa")==string("father"));
-    // CHECK(T.find("father") == string("aa"));
-    T.addFather("aa","aaa");
-    cout<<T.relation("aaa")<<endl;
-    // CHECK(T.relation("aaa")==string("grandfather"));
-    // CHECK(T.find("grandfather") == string("aaa"));
-    T.display();
-    return 0;
-}
+    // Tree T("a");
+    // T.addFather("a","aa");
+    // // CHECK(T.relation("aa")==string("father"));
+    // // CHECK(T.find("father") == string("aa"));
+    // T.addFather("aa","bb");
+    // T.addFather("bb","bbb");
+    // T.addMother("bbb","hola");
+    // cout<<T.find("great-great-grandmother")<<endl;
+    // // CHECK(T.relation("aaa")==string("grandfather"));
+    // // CHECK(T.find("grandfather") == string("aaa"));
+    // T.display();
+    // return 0;
+// }
 
 

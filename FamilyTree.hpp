@@ -47,7 +47,7 @@ namespace family{
         }
 
     private:
-        void Father(Node* root,string name,string father);
+        void Father(Node& root,string name,string father);
         void Mother(Node* root,string name,string mother);
         void scan(Node* root);
         void printTree(Node* node, int space,string gender);

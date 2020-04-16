@@ -20,19 +20,19 @@ Tree makeTree(){
 
 // Test Cases
 
-// TEST_CASE("Unrelated Case"){
-//     Tree T = makeTree();
-//     CHECK(T.relation("Omri") == string("unrelated"));
-// 	CHECK(T.relation("Dan") == string("unrelated"));
-// 	CHECK(T.relation("Shmuel") == string("unrelated"));
-// 	CHECK(T.relation("Yaakov") == string("father"));
-// 	CHECK(T.relation("Rachel") == string("mother"));
-// 	CHECK(T.relation("sava") == string("unrelated"));
-// 	CHECK(T.relation("Isaac") == string("grandfather"));
-// 	CHECK(T.relation("Quar") == string("unrelated"));
-// 	CHECK(T.relation("quar") == string("unrelated"));
-// 	CHECK(T.relation("Rivka") == string("grandmother"));
-// }
+TEST_CASE("Unrelated Case"){
+    Tree T = makeTree();
+    CHECK(T.relation("Omri") == string("unrelated"));
+	CHECK(T.relation("Dan") == string("unrelated"));
+	CHECK(T.relation("Shmuel") == string("unrelated"));
+	CHECK(T.relation("Yaakov") == string("father"));
+	CHECK(T.relation("Rachel") == string("mother"));
+	CHECK(T.relation("sava") == string("unrelated"));
+	CHECK(T.relation("Isaac") == string("grandfather"));
+	CHECK(T.relation("Quar") == string("unrelated"));
+	CHECK(T.relation("quar") == string("unrelated"));
+	CHECK(T.relation("Rivka") == string("grandmother"));
+}
 
 TEST_CASE("find Case"){
     Tree T = makeTree();
@@ -87,25 +87,25 @@ TEST_CASE("remove function") {
     CHECK_THROWS(T.find("mother"));
 }
 
-// TEST_CASE("relation function"){
-//     Tree T = makeTree();
-//     CHECK(T.relation("Rivka")==string("grandmother"));
-//     CHECK(T.relation("mishu")==string("unrelated"));
-//     CHECK(T.relation("yeled")==string("unrelated"));
-//     CHECK(T.relation("gibor")==string("unrelated"));
-//     CHECK(T.relation("mami")==string("unrelated"));
-//     CHECK(T.relation("gidi")==string("unrelated"));
-//     // T.addFather("Rivka","Baroh");
-//     // T.addMother("Rivka","Zipi");
-//     // CHECK(T.relation("Baroh")==string("great-grandfather"));
-//     // CHECK(T.relation("Zipi")==string("great-grandmother"));
-//     // T.addFather("Terah","Yigal");
-//     // T.addMother("Terah","Miri");
-//     // CHECK(T.relation("Yigal")==string("great-great-great-grandfather"));
-//     // CHECK(T.relation("Miri")==string("great-great-great-grandmother"));
-//     // CHECK(T.relation("parent")==string("unrelated"));
-//     // CHECK(T.relation("Yiga")==string("unrelated"));
-// }
+TEST_CASE("relation function"){
+    Tree T = makeTree();
+    CHECK(T.relation("Rivka")==string("grandmother"));
+    CHECK(T.relation("mishu")==string("unrelated"));
+    CHECK(T.relation("yeled")==string("unrelated"));
+    CHECK(T.relation("gibor")==string("unrelated"));
+    CHECK(T.relation("mami")==string("unrelated"));
+    CHECK(T.relation("gidi")==string("unrelated"));
+    T.addFather("Rivka","Baroh");
+    T.addMother("Rivka","Zipi");
+    CHECK(T.relation("Baroh")==string("great-grandfather"));
+    CHECK(T.relation("Zipi")==string("great-grandmother"));
+    T.addFather("Terah","Yigal");
+    T.addMother("Terah","Miri");
+    CHECK(T.relation("Yigal")==string("great-great-great-grandfather"));
+    CHECK(T.relation("Miri")==string("great-great-great-grandmother"));
+    CHECK(T.relation("parent")==string("unrelated"));
+    CHECK(T.relation("Yiga")==string("unrelated"));
+}
 
 TEST_CASE("check the find function"){
     Tree T = makeTree();
@@ -167,18 +167,18 @@ TEST_CASE("Addfather function") {
     T.addFather("aa","aaa");
     CHECK(T.relation("aaa")==string("grandfather"));
     CHECK(T.find("grandfather") == string("aaa"));
-//     T.addFather("aaa","aaaa");
-//     CHECK(T.relation("aaaa")==string("great-grandfather"));
-//     CHECK(T.find("great-grandfather") == string("aaaa"));
-//     T.addFather("aaaa","aaaaa");
-//     CHECK(T.relation("aaaaa")==string("great-great-grandfather"));
-//     CHECK(T.find("great-great-grandfather") == string("aaaaa"));
-//     T.addFather("aaaaa","aaaaaa");
-//     CHECK(T.relation("aaaaaa")==string("great-great-great-grandfather"));
-//     CHECK(T.find("great-great-great-grandfather") == string("aaaaaa"));
-//     T.addFather("aaaaaa","aaaaaaa");
-//     CHECK(T.relation("aaaaaaa")==string("great-great-great-great-grandfather"));
-//     CHECK(T.find("great-great-great-great-grandfather") == string("aaaaaa"));
+    T.addFather("aaa","aaaa");
+    CHECK(T.relation("aaaa")==string("great-grandfather"));
+    CHECK(T.find("great-grandfather") == string("aaaa"));
+    T.addFather("aaaa","aaaaa");
+    CHECK(T.relation("aaaaa")==string("great-great-grandfather"));
+    CHECK(T.find("great-great-grandfather") == string("aaaaa"));
+    T.addFather("aaaaa","aaaaaa");
+    CHECK(T.relation("aaaaaa")==string("great-great-great-grandfather"));
+    CHECK(T.find("great-great-great-grandfather") == string("aaaaaa"));
+    T.addFather("aaaaaa","aaaaaaa");
+    CHECK(T.relation("aaaaaaa")==string("great-great-great-great-grandfather"));
+    CHECK(T.find("great-great-great-great-grandfather") == string("aaaaaaa"));
 }
 
 TEST_CASE("Addmother function") {
@@ -188,19 +188,19 @@ TEST_CASE("Addmother function") {
     CHECK(T.find("mother") == string("aa"));
     T.addMother("aa","aaa");
     CHECK(T.relation("aaa")==string("grandmother"));
-    CHECK(T.find("grandmother") == string("aaa"));
+   CHECK(T.find("grandmother") == string("aaa"));
     T.addMother("aaa","aaaa");
     CHECK(T.relation("aaaa")==string("great-grandmother"));
     CHECK(T.find("great-grandmother") == string("aaaa"));
     T.addMother("aaaa","aaaaa");
     CHECK(T.relation("aaaaa")==string("great-great-grandmother"));
-    CHECK(T.find("great-great-grandmotherr") == string("aaaaa"));
+    CHECK(T.find("great-great-grandmother") == string("aaaaa"));
     T.addMother("aaaaa","aaaaaa");
     CHECK(T.relation("aaaaaa")==string("great-great-great-grandmother"));
     CHECK(T.find("great-great-great-grandmother") == string("aaaaaa"));
     T.addMother("aaaaaa","aaaaaaa");
     CHECK(T.relation("aaaaaaa")==string("great-great-great-great-grandmother"));
-    CHECK(T.find("great-great-great-great-grandmother") == string("aaaaaa"));
+    CHECK(T.find("great-great-great-great-grandmother") == string("aaaaaaa"));
 }
 
 TEST_CASE("Empty string") {
