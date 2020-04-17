@@ -219,7 +219,11 @@ void Tree::printTree(Node* node, int space,string gender){
  /* Function that gets a name and father name and add the father to the tree */
 Tree& Tree::addFather(string name,string father){
     if(father==""||name=="") throw std::logic_error("No Name\n");
+    int s=size;
     Father(*(this->root),name,father);
+    if(s==size){
+        throw std::logic_error("The name is not correct\n");
+    }
     return *this;
 }
 /* Side recursive function that gets a root,name and father name and add the father at the correction 
@@ -251,7 +255,11 @@ void Tree::Father(Node& root,string name,string father){
  /* Function that gets a name and mother name and add the father to the tree */
 Tree& Tree::addMother(string name,string mother){
     if(mother==""||name=="") throw std::logic_error("No Name\n");
+    int s=size;
     Mother(this->root,name,mother);
+    if(s==size){
+        throw std::logic_error("The name is not correct\n");
+    }
     return *this;
 }
 /* Side recursive function that gets a root,name and mother name and add the mother at the correction 
@@ -322,36 +330,5 @@ void Tree::removeNode(Node** root){
     this->size--;
 }
 
-// int main(int argc, char const *argv[]){
-//     Tree T("Yosef");
-// 	T.addFather("Yosef", "Yaakov")   // Tells the tree that the father of Yosef is Yaakov.
-// 	 .addMother("Yosef", "Rachel")   // Tells the tree that the mother of Yosef is Rachel.
-// 	 .addFather("Yaakov", "Isaac")
-// 	 .addMother("Yaakov", "Rivka")
-// 	 .addFather("Isaac", "Avraham")
-// 	 .addFather("Avraham", "Terah");
-//     T.addFather("Terah","Yigal");
-//     T.addMother("Terah","Miri");
-//     T.addFather("Rivka","Baroh");
-//     T.addMother("Rivka","Zipi");
-//     T.display();
-//     T.remove("Isaac"); 
-//     T.display();
-//     T.remove("Rivka");
-//     T.display();
-//     return 0;
-    // Tree T("a");
-    // T.addFather("a","aa");
-    // // CHECK(T.relation("aa")==string("father"));
-    // // CHECK(T.find("father") == string("aa"));
-    // T.addFather("aa","bb");
-    // T.addFather("bb","bbb");
-    // T.addMother("bbb","hola");
-    // cout<<T.find("great-great-grandmother")<<endl;
-    // // CHECK(T.relation("aaa")==string("grandfather"));
-    // // CHECK(T.find("grandfather") == string("aaa"));
-    // T.display();
-    // return 0;
-// }
 
 
